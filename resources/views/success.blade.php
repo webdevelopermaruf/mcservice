@@ -11,7 +11,7 @@
                     </div>
                     <div class="box-info-book-border wow fadeInUp">
                         <div class="info-1"> <span class="color-text text-14">Order Number</span><br><span class="color-text text-14-medium">#{{$invoice->id}}</span></div>
-                        <div class="info-1"> <span class="color-text text-14">Date</span><br><span class="color-text text-14-medium">{{date('D, M d, Y', $invoice->updated_at)}}</span></div>
+                        <div class="info-1"> <span class="color-text text-14">Date</span><br><span class="color-text text-14-medium">{{date('D, M d, Y', strtotime($invoice->updated_at))}}</span></div>
                         <div class="info-1"> <span class="color-text text-14">Total</span><br><span class="color-text text-14-medium">£{{$invoice->fare}}</span></div>
                     </div>
                     <div class="box-booking-border wow fadeInUp">
@@ -24,6 +24,18 @@
                             <li> <span class="text-top">Distance</span><span class="text-bottom">{{$invoice->distance}} Miles</span></li>
                         </ul>
                     </div>
+                    @if($invoice->return_date)
+                    <div class="box-booking-border wow fadeInUp">
+                        <h6 class="heading-20-medium color-text">Return Reservation Information</h6>
+                        <ul class="list-prices">
+                            <li> <span class="text-top">Pick Up Address</span><span class="text-bottom">{{$invoice->to}}</span></li>
+                            <li> <span class="text-top">Drop Off Address</span><span class="text-bottom">{{$invoice->from}}</span></li>
+                            <li> <span class="text-top">Pick Up Date</span><span class="text-bottom">{{date('D, M d, Y', strtotime($invoice->return_date))}}</span></li>
+                            <li> <span class="text-top">Pick Up Time</span><span class="text-bottom">{{date("g:i A", strtotime($invoice->return_time))}}</span></li>
+                            <li> <span class="text-top">Distance</span><span class="text-bottom">{{$invoice->distance}} Miles</span></li>
+                        </ul>
+                    </div>
+                    @endif
                     <div class="box-booking-border wow fadeInUp">
                         <h6 class="heading-20-medium color-text">Selected Car</h6>
                         <div class="mt-20 mb-20 text-center"> <img width="200px" src="{{$invoice->fleet->image}}" alt="{{$invoice->fleet->name}}"></div>

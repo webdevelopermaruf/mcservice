@@ -72,6 +72,7 @@ class FleetsController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imagePath = $image->store('fleets', 'public'); // Store image in the 'fleets' folder
+            $imagePath = Storage::url($imagePath);
         }
 
         // Create a new Fleet record

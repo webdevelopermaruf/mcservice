@@ -20,9 +20,6 @@ Route::get('/cancel', [PaymentController::class, 'cancel'])->name('cancel');
 
 Route::post('/webhook-stripe', [PaymentController::class, 'handleStripeWebhook']);
 
-
-
-
 // vue routes
 Route::get('/booking', [SiteController::class, 'booking']);
 Route::post('/search/api/fleets', [FleetsController::class, 'search']);

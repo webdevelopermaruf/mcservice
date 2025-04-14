@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('to');
             $table->date('date');
             $table->time('time');
+            $table->tinyInteger('remaining_return')->default(0);
+            $table->date('return_date')->nullable();
+            $table->time('return_time')->nullable();
             $table->string('flight_number')->nullable();
             $table->tinyInteger('trip_type');
             $table->decimal('distance',10,2);
@@ -37,6 +40,7 @@ return new class extends Migration
             $table->integer('people');
             $table->integer('luggages');
             $table->tinyInteger('status');
+            $table->text('pay_link')->nullable();
             $table->timestamps();
         });
     }

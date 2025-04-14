@@ -50,13 +50,12 @@ class PaymentController extends Controller
         }
         $passenger_id = Passengers::where('email', json_decode($request->input('passenger'))->email)->value('id');
 
-        $returnId = null;
-        if($request->input('hasReturn') == "true") {
-
-        }
         $trip_order = Trips::insertGetId([
             'from' => $request->input('pickup'),
             'to' => $request->input('dropoff'),
+            'remaining_return' => $request->input('hasReturn')==="true" ? 1 : 0,
+            'return_date' => $request->input('hasReturn')==="true" ? $request->input('return_date') : null,
+            'return_time' => $request->input('hasReturn')==="true" ? $request->input('return_time') : null,
             'date' => $request->input('date'),
             'time' => $request->input('time'),
             'flight_number' => $request->input('flight_number'),
@@ -103,7 +102,7 @@ class PaymentController extends Controller
             'success_url' => route('success').'?order='.$trip_order,
             'cancel_url' => route('cancel'),
         ]);
-
+        $update = Trips::where('id', $trip_order)->update(['pay_link'=> $checkout_session->url]);
         if(auth()->user() && $request->input('admin')){
             $invoice = Trips::where('id', $trip_order)->first();
             Mail::to(json_decode($request->input('passenger'))->email)->send(new BookingPaymentLink($invoice, $checkout_session->url));
@@ -157,7 +156,7 @@ class PaymentController extends Controller
     }
 
     public function updateBooking(Request $request){
-        $update = Trips::where("id", $request->input('order'))->update(['status' => 2]);
+        $update = Trips::where("id", $request->input('order'))->update(['status' => $request->input('status')]);
         return redirect()->to('/admin/trips');
     }
 }

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from 'vue';
-import { Loader } from '@googlemaps/js-api-loader';
 import { usePage } from '@inertiajs/vue3'
 
 const page = usePage()
@@ -84,15 +83,9 @@ watch(() => [form.pickup, form.dropoff], () => {
     }
 }, { immediate: true });
 
+
 // Load Google Maps API and initialize autocomplete
 onMounted(async () => {
-    const loader = new Loader({
-        apiKey: 'AIzaSyDUplFLQJttGXu131R5JYQCqkEPDQeO7gY', // Replace with your API key
-        libraries: ['places', 'directions'],
-        region:'GB'
-    });
-    await loader.load();
-    console.log("Google Maps API loaded successfully!");
     const handleAutocomplete = (inputId, field) => {
         const input = document.getElementById(inputId);
         let autocomplete = null;
@@ -168,18 +161,6 @@ watch(
         form.fare = null;
     }
 );
-setTimeout(()=> {
-    form.pickup="Manchester Airport Terminal 1";
-    form.dropoff="Leeds";
-    form.date="2025-04-12";
-    form.time="16:00"
-    form.passenger.people=1
-    form.passenger.luggages=1
-
-    form.passenger.name = "Md Maruf";
-    form.passenger.email = "marufmd5040@gmail.com";
-    form.passenger.phone = 4407460229387;
-}, 1000)
 </script>
 
 <template>
@@ -192,7 +173,17 @@ setTimeout(()=> {
                             <div class="icon-tab"> <span class="icon-book icon-vehicle"> </span><span class="text-tab">Vehicle </span></div>
                             <div class="number-tab"> <span>01</span></div>
                         </div></a></div>
-                    <div class="item-tab wow fadeInUp"><a href="#passenger-details" @click="()=>{if(form.fare && form.fleet)useActiveMenu=2}">
+                    <div class="item-tab wow fadeInUp"><a href="#passenger-details" @click="()=>{
+                        if(form.fare && form.fleet){
+                            if(form.hasReturn){
+                                if(form.return_date && form.return_time){
+                                    useActiveMenu=2
+                                }
+                            }else{
+                                useActiveMenu=2
+                            }
+                        }
+                    }">
                         <div class="box-tab-step" :class="useActiveMenu >= 2 && 'active'">
                             <div class="icon-tab"> <span class="icon-book icon-pax"> </span><span class="text-tab">Passenger  </span></div>
                             <div class="number-tab"> <span>02</span></div>
@@ -204,6 +195,7 @@ setTimeout(()=> {
                         </div></a></div>
                 </div>
                 <div class="box-row-tab mt-20 mb-20">
+                    <h3>Your booking time should be 360 minutes more than current time</h3>
                     <div class="box-tab-left">
                         <section :class="useActiveMenu!==1&&'d-none'" class="row">
                             <h5 class="my-2">Choose Type</h5>
@@ -351,7 +343,7 @@ setTimeout(()=> {
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-label" for="r_date">Return Date*</label>
-                                        <input class="form-control" id="r_date" type="date" :min="now.toISOString().split('T')[0]" placeholder="Enter Return Date" v-model="form.return_date">
+                                        <input class="form-control" id="r_date" type="date" :min="form.date" placeholder="Enter Return Date" v-model="form.return_date">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -429,7 +421,17 @@ setTimeout(()=> {
                             <section v-if="fleets.length===0">
                                 <p>Please Fill the form to select a fleet</p>
                             </section>
-                            <button class="btn btn-primary w-100" style="margin-top: 20px" @click="useActiveMenu=2"
+                            <button class="btn btn-primary w-100" style="margin-top: 20px" @click="()=>{
+                                if(form.fare && form.fleet){
+                                    if(form.hasReturn){
+                                        if(form.return_date && form.return_time){
+                                            useActiveMenu=2
+                                        }
+                                    }else{
+                                        useActiveMenu=2
+                                    }
+                                }
+                            }"
                             :disabled="!form.fare || !form.fleet">Select Fleet</button>
                         </div>
                     </div>

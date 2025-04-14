@@ -56,19 +56,30 @@
                     </div>
                 </div>
             </div>
-            <h2 v-if="upcomingtrips.length === 0" class="text-white">No Upcoming Trip</h2>
-            <div v-for="trip in upcomingtrips" v-else class="bg-gray-800 rounded-lg p-4 shadow">
-                <div class="flex justify-between items-center">
+            <div v-for="trip in upcomingtrips" v-else class="bg-gray-800 rounded-lg p-4 shadow active:bg-gray-400">
+                <div class="flex justify-between items-center" :key="trip.id" @dblclick="handleCopy(trip.pay_link)">
                     <div>
-                        <h3 class="text-lg font-semibold text-yellow-300">{{ trip.from }} → {{ trip.to }}</h3>
-                        <p class="text-sm text-gray-400">{{ trip.date }} at {{ trip.time }}</p>
+                        <template v-if="trip.status === 3">
+                            <h3 class="text-lg font-semibold text-yellow-300">{{ trip.to }} → {{ trip.from }}</h3>
+                            <p class="text-sm text-gray-400">{{ trip.return_date }} at {{ trip.return_time }} </p>
+                        </template>
+                        <template v-else>
+                            <h3 class="text-lg font-semibold text-yellow-300">{{ trip.from }} → {{ trip.to }}</h3>
+                            <p class="text-sm text-gray-400">{{ trip.date }} at {{ trip.time }} </p>
+                            <p class="text-sm text-gray-400" v-if="trip.return_date">Return: {{ trip.return_date }} at {{ trip.return_time }} </p>
+                        </template>
                     </div>
                     <div>
-                        <button class="text-sm text-white-900 bg-black py-1 px-3 rounded mr-3" @click="actionComplete(trip.id)">
+                        <template v-if="trip.remaining_return === 1 && trip.status != 3">
+                            <button class="text-sm text-white-900 bg-black py-1 px-3 rounded mr-3" @click="actionComplete(trip.id, 3)">
+                                Complete First Trip
+                            </button>
+                        </template>
+                        <button class="text-sm text-white-900 bg-black py-1 px-3 rounded mr-3" v-else @click="actionComplete(trip.id)">
                         Complete
                         </button>
                         <button @click="trip.showDetails = !trip.showDetails"
-                                class="text-sm text-yellow-400 hover:underline">
+                                class="text-sm bg-yellow-500 mt-3 text-black hover:underline py-1 px-3">
                             {{ trip.showDetails ? 'Hide' : 'Details' }}
                         </button>
                     </div>
@@ -87,6 +98,7 @@
                     </div>
                 </div>
             </div>
+            <h2 v-if="upcomingtrips.length === 0" class="text-white">No Upcoming Trip</h2>
         </div>
     </div>
 </template>
@@ -100,7 +112,6 @@ const upcomingtrips = ref([])
 
 onMounted(fetchTrips)
 
-// Track the active view, 'upcoming' or 'completed'
 const activeView = ref('upcoming')
 
 // Set the active view when a button is clicked
@@ -125,14 +136,17 @@ async function fetchTrips() {
     upcomingtrips.value = allTrips.filter(t => t.status !== 2)
 }
 
-const actionComplete  = async (trip) => {
+const actionComplete  = async (trip, status=2) => {
     let confirmation = confirm('Are you sure to complete this trip?');
     if(confirmation){
-        await router.post('/admin/update-booking', {order: trip});
+        await router.post('/admin/update-booking', {order: trip, status:status});
         window.location.reload();
     }
 }
 
+const handleCopy  = (data) =>{
+    navigator.clipboard.writeText(data)
+}
 </script>
 
 <style scoped>

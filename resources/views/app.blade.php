@@ -16,6 +16,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/template/favicon.png">
     <link href="assets/css/style.css@v=1.0.0.css" rel="stylesheet">
     <title>Mash Chauffeur Service - Your Comfort, Our Priority</title>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUplFLQJttGXu131R5JYQCqkEPDQeO7gY&libraries=places"
+        loading="async"
+    ></script>
     @vite('resources/js/app.js')
     @inertiaHead
 </head>
@@ -47,9 +51,5 @@
 <script src="assets/js/vendors/jquery-ui.js"></script>
 <script src="assets/js/vendors/jquery.timepicker.min.js"></script>
 <script src="assets/js/main.js@v=1.0.0" type="text/javascript"></script>
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUplFLQJttGXu131R5JYQCqkEPDQeO7gY&libraries=places,directions"
-    async
-></script>
 </body>
 </html>

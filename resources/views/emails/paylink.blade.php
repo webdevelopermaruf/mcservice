@@ -12,3 +12,9 @@
 <p><strong>Drop-off:</strong> {{ $invoice->to }}</p>
 <p><strong>Date:</strong> {{ date('D, M d, Y', strtotime($invoice->date)) }}</p>
 <p><strong>Time:</strong> {{ date("g:i A", strtotime($invoice->time)) }}</p>
+
+@if($invoice->return_date)
+    <p>Including Return Trip</p>
+    <p><strong>Return Date:</strong> {{ date('D, M d, Y', strtotime($invoice->return_date)) }}</p>
+    <p><strong>Return Time:</strong> {{ date("g:i A", strtotime($invoice->return_time)) }}</p>
+@endif

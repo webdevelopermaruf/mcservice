@@ -27,10 +27,12 @@ class DriverController extends Controller
 
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('drivers/photos', 'public');
+            $validated['photo'] = Storage::url($validated['photo']);
         }
 
         if ($request->hasFile('driving_license')) {
             $validated['driving_license'] = $request->file('driving_license')->store('drivers/licenses', 'public');
+            $validated['driving_license'] = Storage::url($validated['driving_license']);
         }
 
         $driver = Drivers::create($validated);
@@ -64,6 +66,7 @@ class DriverController extends Controller
                 Storage::disk('public')->delete($driver->photo);
             }
             $validated['photo'] = $request->file('photo')->store('drivers/photos', 'public');
+            $validated['photo'] = Storage::url($validated['photo']);
         }
 
         if ($request->hasFile('driving_license')) {
@@ -72,6 +75,7 @@ class DriverController extends Controller
                 Storage::disk('public')->delete($driver->driving_license);
             }
             $validated['driving_license'] = $request->file('driving_license')->store('drivers/licenses', 'public');
+            $validated['driving_license'] = Storage::url($validated['driving_license']);
         }
 
         $driver->update($validated);
