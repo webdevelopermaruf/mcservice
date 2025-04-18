@@ -149,9 +149,13 @@ async function fetchFleets() {
 }
 
 watch(form, ()=>{
-    if(form.time && form.date && form.distance && form.pickup && form.dropoff
-        && form.passenger.people && form.passenger.luggages){
-        fetchFleets();
+    if(form.time && form.date && form.distance && form.passenger.people && form.passenger.luggages && form.pickup){
+        if(form.bookingType === 'hourly'){
+            fetchFleets();
+        }
+        if(form.dropoff){
+            fetchFleets();
+        }
     }
 })
 watch(
@@ -188,14 +192,17 @@ watch(
                             <div class="icon-tab"> <span class="icon-book icon-pax"> </span><span class="text-tab">Passenger  </span></div>
                             <div class="number-tab"> <span>02</span></div>
                         </div></a></div>
-                    <div class="item-tab wow fadeInUp"><a href="#payment" @click="()=>{if(form.fare && form.fleet && form.passenger.name && form.passenger.email && form.passenger.phone) useActiveMenu=3}">
+                    <div class="item-tab wow fadeInUp"><a href="#payment" @click="()=>{
+                        if(form.fare && form.fleet && form.passenger.name && form.passenger.email && form.passenger.phone){
+                            useActiveMenu=3
+                        }
+                    }">
                         <div class="box-tab-step" :class="useActiveMenu === 3 && 'active'">
                             <div class="icon-tab"> <span class="icon-book icon-payment"> </span><span class="text-tab">Payment  </span></div>
                             <div class="number-tab"> <span>03</span></div>
                         </div></a></div>
                 </div>
                 <div class="box-row-tab mt-20 mb-20">
-                    <h3>Your booking time should be 360 minutes more than current time</h3>
                     <div class="box-tab-left">
                         <section :class="useActiveMenu!==1&&'d-none'" class="row">
                             <h5 class="my-2">Choose Type</h5>
@@ -212,7 +219,11 @@ watch(
                                         <span class="custom-radio"></span> Airport Pickup
                                     </label>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4" @click="()=>{
+                                    form.distance=null;
+                                    form.fare=null;
+                                    form.fleet=null;
+                                }">
                                     <label>
                                         <input type="radio" name="option" v-model="form.bookingType" value="hourly" @change="changeType('hourly')">
                                         <span class="custom-radio"></span> Hourly
@@ -244,6 +255,7 @@ watch(
                                         <input class="form-control" v-model="form.time" id="time" type="time">
                                     </div>
                                 </div>
+                                <h5 class="pb-20 text-danger">Your booking time should be 360 minutes (6 Hours) more than current time</h5>
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-label" for="passenger">Number of Passenger*</label>
@@ -271,6 +283,7 @@ watch(
                                                :disabled="form.date===''" v-model="form.flight" type="text">
                                     </div>
                                 </div>
+                                <h5 class="pb-20 text-danger">Your booking time should be 360 minutes (6 Hours) more than current time</h5>
                                 <div class="col-lg-12" style="margin-bottom: 14px;" v-if="form.pickup">
                                     <div class="form-group focused">
                                         <label class="form-label" for="airport_pickup">Pickup Address:  <b class="text-dark">{{form.pickup}} </b> (Estimated Arrival Time: <b>{{form.time}}</b>)</label>
@@ -308,6 +321,8 @@ watch(
                                         <input class="form-control" id="flight_number" type="time"  v-model="form.time">
                                     </div>
                                 </div>
+                                <h5 class="pb-20 text-danger">Your booking time should be 360 minutes (6 Hours) more than current time</h5>
+
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-label" for="pickup">Pickup Address*</label>
@@ -392,7 +407,7 @@ watch(
                                     <h4 class="py-2">Route Overview</h4>
                                     <p><strong>Pickup:</strong> {{ form.pickup }}</p>
                                     <p><strong>Drop off:</strong> {{ form.dropoff }}</p>
-                                    <p><strong>Distance:</strong> {{ form.distance }} Mile(s)</p>
+                                    <p><strong>Distance:</strong> {{ form.distance }} {{form.bookingType === "hourly" ? "Hour(s)" : "Mile(s)"}}</p>
                                     <p><strong>Booking Date & Time:</strong> {{form.date}} {{ form.time }}</p>
                                 </div>
                             </div>

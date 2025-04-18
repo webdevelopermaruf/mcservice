@@ -38,14 +38,14 @@ Route::prefix('/admin')->group(function () {
         Route::post('/update-booking', [PaymentController::class, 'updateBooking']);
         Route::get('/api/fleets', [FleetsController::class, 'GetFleets']);
         Route::post('/api/fleets', [FleetsController::class, 'InsertFleets']);
-        Route::put('/api/fleets/update/{id}', [FleetsController::class, 'UpdateFleets']);
-        Route::get('/api/fleets/{id}', [FleetsController::class, 'DeleteFleets']);
+        Route::post('/api/fleets/{id}', [FleetsController::class, 'UpdateFleets']);
+        Route::delete('/api/fleets/{id}', [FleetsController::class, 'DeleteFleets']);
 
 
         Route::get('/api/drivers', [DriverController::class, 'index']);
         Route::post('/api/drivers', [DriverController::class, 'store']);
-        Route::put('/api/drivers/update/{id}', [DriverController::class, 'update']);
-        Route::get('/api/drivers/{id}', [DriverController::class, 'destroy']);
+        Route::post('/api/drivers/{id}', [DriverController::class, 'update']);
+        Route::delete('/api/drivers/{id}', [DriverController::class, 'destroy']);
 
         Route::get('/api/trips', [TripController::class, 'index']);
 

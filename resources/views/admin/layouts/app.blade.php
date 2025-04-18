@@ -6,6 +6,7 @@
     <title>Mash Chauffeur - Login</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/logo/icon.png">
     <style>
         /* Fade-in animation */
         @keyframes fadeIn {

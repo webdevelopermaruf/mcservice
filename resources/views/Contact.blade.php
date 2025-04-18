@@ -19,14 +19,25 @@
                         <div class="cardContact wow fadeInUp">
                             <div class="cardImage mb-30"><img src="assets/imgs/page/contact/new-york.svg" alt="luxride"></div>
                             <div class="cardInfo">
-                                <h6 class="heading-20-medium mb-10">United Kingdom Office</h6>
-                                <p class="text-16 mb-20">Birmingham, England, United Kingdom</p>
-                                <p class="text-16 mb-20">+32 2 512 08 15</p>
+                                <h6 class="heading-20-medium mb-10">Birmingham Office</h6>
+                                <p class="text-16 mb-20">{{json_decode($contacts->long_description)->address}}</p>
+                                <p class="text-16 mb-20">{{json_decode($contacts->long_description)->phone2}}</p>
                                 <p class="text-16">{{json_decode($contacts->long_description)->email}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mw-770">
+                    <div class="col-lg-3 col-sm-6 mb-30">
+                        <div class="cardContact wow fadeInUp">
+                            <div class="cardImage mb-30"><img src="assets/imgs/page/contact/new-york.svg" alt="luxride"></div>
+                            <div class="cardInfo">
+                                <h6 class="heading-20-medium mb-10">Wolverhampton Office</h6>
+                                <p class="text-16 mb-20">{{json_decode($contacts->long_description)->address2}}</p>
+                                <p class="text-16 mb-20">{{json_decode($contacts->long_description)->phone1}}</p>
+                                <p class="text-16">{{json_decode($contacts->long_description)->email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mw-770" style="display:none">
                         <h2 class="heading-44-medium mb-60 text-center wow fadeInUp">Leave us your info</h2>
                         <div class="form-contact form-comment wow fadeInUp">
                             <form action="#">

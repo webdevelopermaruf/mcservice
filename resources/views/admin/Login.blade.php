@@ -57,10 +57,12 @@
         </button>
     </form>
 
+{{--
     <!-- Forgot Password Link -->
-    <p class="mt-4 text-center text-sm text-gray-400">
-        <a href="/admin/forget-password" class="text-yellow-400 hover:text-yellow-300 underline"> Forgot your password?</a>
-    </p>
+
+<p class="mt-4 text-center text-sm text-gray-400">--}}
+{{--        <a href="/admin/forget-password" class="text-yellow-400 hover:text-yellow-300 underline"> Forgot your password?</a>--}}
+{{--    </p>--}}
 </div>
 
 <!-- JavaScript for Animation -->

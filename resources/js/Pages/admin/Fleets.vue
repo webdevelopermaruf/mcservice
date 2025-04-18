@@ -40,7 +40,13 @@
                     </div>
                     <div class="flex w-full space-x-3 mt-2">
                         <button @click="openModal(fleet)" class="text-yellow-400 hover:underline">Edit</button>
-                        <button @click="deleteFleet(fleet.id)" class="text-red-400 hover:underline">Delete</button>
+                        <form :action="`/admin/api/fleets/${fleet.id}`"
+                              @submit.prevent="handleDelete"
+                              method="POST" class="inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" :value="csrfToken">
+                            <button type="submit" class="text-red-400 hover:underline">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -50,17 +56,18 @@
             <div class="bg-gray-800 text-white p-6 rounded-lg w-full max-w-3xl relative">
                 <h3 class="text-xl font-semibold mb-4">{{ editingFleet.id ? 'Edit Fleet' : 'Add Fleet' }}</h3>
                 <div class="overflow-y-auto max-h-[calc(100vh-120px)]">
-                    <form @submit.prevent="saveFleet" class="space-y-4">
+                    <form :action="editingFleet.id ? `/admin/api/fleets/${editingFleet.id}` : '/admin/api/fleets'" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <input type="hidden" name="_token" :value="csrfToken">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <template v-for="field in fields" :key="field.key">
                                 <div>
                                     <label class="block mb-1 text-sm">{{ field.label }}</label>
-                                    <input v-model="editingFleet[field.key]" :type="field.type" :placeholder="field.label" class="input" :required="field.required" />
+                                    <input v-model="editingFleet[field.key]" :type="field.type" :placeholder="field.label" class="input" :required="field.required" :name="field.key" />
                                 </div>
                             </template>
                             <div>
                                 <label class="block mb-1 text-sm">Image</label>
-                                <input type="file" @change="handleImage" class="input bg-gray-700 text-white" />
+                                <input type="file" class="input bg-gray-700 text-white" name="image" />
                             </div>
                         </div>
                         <div class="flex justify-end mt-4 space-x-3">
@@ -83,8 +90,6 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 const fleets = ref([])
 const showModal = ref(false)
 const editingFleet = ref({})
-const imageFile = ref(null)
-
 const fields = [
     { key: 'name', label: 'Name', type: 'text', required: true },
     { key: 'description', label: 'Description', type: 'text', required: false },
@@ -109,7 +114,6 @@ function openModal(fleet = null) {
 function closeModal() {
     showModal.value = false
     editingFleet.value = {}
-    imageFile.value = null
 }
 
 async function fetchFleets() {
@@ -117,45 +121,12 @@ async function fetchFleets() {
     const data = await res.json()
     fleets.value = data.map(f => ({ ...f, showDetails: false }))
 }
-
-function handleImage(e) {
-    imageFile.value = e.target.files[0]
+const handleDelete = (e) => {
+    if (confirm('Are you sure to delete?')) {
+        e.target.submit(); // proceed with form submission
+    }
 }
 
-async function saveFleet() {
-    const formData = new FormData()
-    for (const key in editingFleet.value) {
-        if (editingFleet.value[key] !== null && editingFleet.value[key] !== undefined) {
-            formData.append(key, editingFleet.value[key])
-        }
-    }
-    if (imageFile.value) {
-        formData.append('image', imageFile.value)
-    }
-
-    let url = '/admin/api/fleets' // insert
-    if (editingFleet.value.id) {
-        formData.append('_method', 'PUT')
-        url = `/admin/api/fleets/update/${editingFleet.value.id}` // your custom update route
-    }
-
-    let method = editingFleet.value.id ? 'PUT': 'POST';
-
-    const response = await fetch(url, {
-        method: method,
-        headers: { 'X-CSRF-TOKEN': csrfToken },
-        body: formData,
-    })
-
-    await fetchFleets() // ✅ refresh the list
-    closeModal()
-}
-
-async function deleteFleet(id) {
-    if (!confirm('Are you sure to delete this?')) return
-    await fetch(`/admin/api/fleets/${id}`, { method: 'GET', headers: { 'X-CSRF-TOKEN': csrfToken } })
-    fleets.value = fleets.value.filter(f => f.id !== id)
-}
 </script>
 
 <style scoped>

@@ -72,7 +72,7 @@ class FleetsController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imagePath = $image->store('fleets', 'public'); // Store image in the 'fleets' folder
-            $imagePath = Storage::url($imagePath);
+            $imagePath = asset('storage/' . $imagePath); // Use asset() to create a publicly accessible URL
         }
 
         // Create a new Fleet record
@@ -91,13 +91,11 @@ class FleetsController extends Controller
             'image' => $imagePath, // Save image path in the database
         ]);
 
-        // Return response (you can redirect or return success response)
-        return response()->json($fleet, 201);
+        return redirect()->back();
     }
 
     public function UpdateFleets(Request $request, $id)
     {
-        return $request->hasFile('image');
         // Find the fleet
         $fleet = Fleets::findOrFail($id);
 
@@ -131,7 +129,7 @@ class FleetsController extends Controller
         // Update the fleet
         $fleet->update($validatedData);
 
-        return response()->json($fleet, 200);
+        return redirect()->back();
     }
 
 
@@ -143,11 +141,10 @@ class FleetsController extends Controller
         if ($fleet->image && Storage::disk('public')->exists($fleet->image)) {
             Storage::disk('public')->delete($fleet->image);
         }
-
         // Delete the fleet
         $fleet->delete();
 
-        return response()->json(['message' => 'Fleet deleted successfully.'], 200);
+        return redirect()->back();
     }
 
 }

@@ -6,19 +6,40 @@
                 <div class="swiper-container swiper-banner-1 pb-0">
                     <div class="swiper-wrapper">
                         @foreach(json_decode($contents['slider']->long_description) as $s_content)
-                        <div class="swiper-slide">
-                            <div class="box-cover-image" style="background-image:url({{$s_content}})"></div>
-                            <div class="box-banner-info">
-                                <p class="text-16 color-white wow fadeInUp">Where Would You Like To Go?</p>
-                                <h2 class="heading-52-medium color-white wow fadeInUp">Your Personal <br class="d-none d-lg-block">Chauffeur Services</h2>
+                            <div class="swiper-slide">
+                                <div class="box-cover-image" style="background-image:url({{$s_content}})"></div>
+                                <div class="box-banner-info">
+                                    <p class="text-16 mt35px color-white wow fadeInUp">Where Would You Like To Go?</p>
+                                    <h2 class="heading-52-medium color-white wow fadeInUp">Your Personal <br class="d-none d-lg-block">Chauffeur Services</h2>
+                                </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                     <div class="box-pagination-button">
                         <div class="swiper-button-prev swiper-button-prev-banner"></div>
                         <div class="swiper-button-next swiper-button-next-banner"></div>
                         <div class="swiper-pagination swiper-pagination-banner"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-search-ride bg-transparent wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                <div class="search-item">
+                    <a href="/booking" class="btn btn-search bg-white text-dark" type="submit">Book Now</a>
+                </div>
+            </div>
+        </section>
+        <section class="section pt-120">
+            <div class="container-sub">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-30">
+                        <img src="/assets/imgs/page/about/bg-trip2.png" alt="service">
+                    </div>
+                    <div class="col-lg-7 mb-30">
+                        <div class="box-region-right text-16 color-text">
+                            <h2 class="heading-44-medium color-text mb-30 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">Premium Quality Chauffeur Service.</h2>
+                            <p>Mash Chauffeur offers premium chauffeur services across Birmingham, setting the standard for comfort, professionalism, and reliability. Our licensed chauffeurs are vetted and certified by Birmingham City Council, bringing extensive experience and a commitment to excellence in every journey.</p>
+                            <p>Whether you’re heading to a business meeting, the airport, a special event, or just exploring the city, you can count on us for a smooth, stylish, and stress-free ride. Our team is known for their punctuality, discretion, polished appearance, and deep local knowledge—qualities that have earned us a reputation as one of Birmingham’s most trusted chauffeur providers.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,19 +61,19 @@
                     <div class="swiper-container swiper-group-4-fleet pb-0">
                         <div class="swiper-wrapper">
                             @foreach($fleets as $fleet)
-                            <div class="swiper-slide">
-                                <div class="cardFleet wow fadeInUp">
-                                    <div class="cardInfo"><a href="/our-fleets">
-                                            <h3 class="text-20-medium color-text mb-10">{{$fleet->name}}</h3></a>
-                                        <p class="text-14 color-text mb-30">{{$fleet->description}}</p>
-                                    </div>
-                                    <div class="cardImage mb-30"><a href="/our-fleets"><img src="{{$fleet->image}}" alt="{{$fleet->name}}"></a></div>
-                                    <div class="cardInfoBottom">
-                                        <div class="passenger"><span class="icon-circle icon-passenger"></span><span class="text-14">Passengers: <span>{{$fleet->passengers}}</span></span></div>
-                                        <div class="luggage"><span class="icon-circle icon-luggage"></span><span class="text-14">Luggage: <span>{{$fleet->luggages}}</span></span></div>
+                                <div class="swiper-slide">
+                                    <div class="cardFleet wow fadeInUp">
+                                        <div class="cardInfo"><a href="/our-fleets">
+                                                <h3 class="text-20-medium color-text mb-10">{{$fleet->name}}</h3></a>
+                                            <p class="text-14 color-text mb-30">{{$fleet->description}}</p>
+                                        </div>
+                                        <div class="cardImage mb-30"><a href="/our-fleets"><img src="{{$fleet->image}}" alt="{{$fleet->name}}"></a></div>
+                                        <div class="cardInfoBottom">
+                                            <div class="passenger"><span class="icon-circle icon-passenger"></span><span class="text-14">Passengers: <span>{{$fleet->passengers}}</span></span></div>
+                                            <div class="luggage"><span class="icon-circle icon-luggage"></span><span class="text-14">Luggage: <span>{{$fleet->luggages}}</span></span></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                         <div class="box-pagination-fleet">
@@ -78,44 +99,44 @@
                 </div>
                 <div class="row mt-50 cardIconStyleCircle">
                     @foreach(json_decode($contents['commitment']->long_description) as $commitment)
-                    <div class="col-lg-4">
-                        <div class="cardIconTitleDesc wow fadeInUp">
-                            <div class="cardIcon"><img src="{{$commitment->icon}}" alt="{{$commitment->title}}"></div>
-                            <div class="cardTitle">
-                                <h5 class="text-20-medium color-text">{{$commitment->title}}</h5>
-                            </div>
-                            <div class="cardDesc">
-                                <p class="text-16 color-text">{{$commitment->desc}}</p>
+                        <div class="col-lg-4">
+                            <div class="cardIconTitleDesc wow fadeInUp">
+                                <div class="cardIcon"><img src="{{$commitment->icon}}" alt="{{$commitment->title}}"></div>
+                                <div class="cardTitle">
+                                    <h5 class="text-20-medium color-text">{{$commitment->title}}</h5>
+                                </div>
+                                <div class="cardDesc">
+                                    <p class="text-16 color-text">{{$commitment->desc}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
         </section>
-        <section class="section mb-30 mt-80 box-showcase">
-            <div class="bg-showcase pt-100 pb-70">
-                <div class="container-sub">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 mb-30">
-                            <h2 class="heading-44-medium color-white wow fadeInUp">{{$contents['showcase']->title}}</h2>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="row align-items-center">
-                                @foreach(json_decode($contents['showcase']->long_description) as $showcase)
-                                <div class="col-4 mb-30 wow fadeInUp">
-                                    <div class="box-number">
-                                        <h2 class="heading-44-medium color-white">{{$showcase->value}}</h2>
-                                        <p class="text-20 color-white">{{$showcase->label}}</p>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+{{--        <section class="section mb-30 mt-80 box-showcase">--}}
+{{--            <div class="bg-showcase pt-100 pb-70">--}}
+{{--                <div class="container-sub">--}}
+{{--                    <div class="row align-items-center">--}}
+{{--                        <div class="col-lg-6 mb-30">--}}
+{{--                            <h2 class="heading-44-medium color-white wow fadeInUp">{{$contents['showcase']->title}}</h2>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-6">--}}
+{{--                            <div class="row align-items-center">--}}
+{{--                                @foreach(json_decode($contents['showcase']->long_description) as $showcase)--}}
+{{--                                    <div class="col-4 mb-30 wow fadeInUp">--}}
+{{--                                        <div class="box-number">--}}
+{{--                                            <h2 class="heading-44-medium color-white">{{$showcase->value}}</h2>--}}
+{{--                                            <p class="text-20 color-white">{{$showcase->label}}</p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <section class="section pt-90 pb-120 bg-our-service">
             <div class="container-sub">
                 <div class="row align-items-center">
@@ -133,20 +154,20 @@
                     <div class="swiper-container swiper-group-4-service pb-0">
                         <div class="swiper-wrapper">
                             @foreach($services as $service)
-                            <div class="swiper-slide">
-                                <div class="cardService wow fadeInUp">
-                                    <div class="cardInfo">
-                                        <h3 class="cardTitle text-20-medium color-white mb-10">{{$service->name}}</h3>
-                                        <div class="box-inner-info">
-                                            <p class="cardDesc text-14 color-white mb-30">{{$service->description}}</p><a class="cardLink btn btn-arrow-up" href="service-single.html">
-                                                <svg class="icon-16" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path>
-                                                </svg></a>
+                                <div class="swiper-slide">
+                                    <div class="cardService wow fadeInUp">
+                                        <div class="cardInfo">
+                                            <h3 class="cardTitle text-20-medium color-white mb-10">{{$service->name}}</h3>
+                                            <div class="box-inner-info">
+                                                <p class="cardDesc text-14 color-white mb-30">{{$service->description}}</p><a class="cardLink btn btn-arrow-up" href="#">
+                                                    <svg class="icon-16" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path>
+                                                    </svg></a>
+                                            </div>
                                         </div>
+                                        <div class="cardImage"><img src="{{$service->photo}}" alt="{{$service->name}}"></div>
                                     </div>
-                                    <div class="cardImage"><img src="{{$service->photo}}" alt="{{$service->name}}"></div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                         <div class="box-pagination-fleet">
@@ -173,20 +194,20 @@
                             <div class="swiper-container swiper-group-testimonials pb-50">
                                 <div class="swiper-wrapper">
                                     @foreach(json_decode($contents['comments']->long_description) as $comment)
-                                    <div class="swiper-slide">
-                                        <div class="cardQuote wow fadeInUp">
-                                            <div class="box-quote">
-                                                <div class="icon-quote"> </div>
-                                                <div class="info-quote">
-                                                    <h5 class="color-white text-18-medium">{{$comment->name}}</h5>
-                                                    <p class="color-white text-14">{{$comment->role}}</p>
+                                        <div class="swiper-slide">
+                                            <div class="cardQuote wow fadeInUp">
+                                                <div class="box-quote">
+                                                    <div class="icon-quote"> </div>
+                                                    <div class="info-quote">
+                                                        <h5 class="color-white text-18-medium">{{$comment->name}}</h5>
+                                                        <p class="color-white text-14">{{$comment->role}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="content-quote">
+                                                    {{$comment->comment}}
                                                 </div>
                                             </div>
-                                            <div class="content-quote">
-                                            {{$comment->comment}}
-                                            </div>
                                         </div>
-                                    </div>
                                     @endforeach
                                 </div>
                                 <div class="box-pagination-testimonials mt-40 wow fadeInUp"> <span class="firstNumber"></span><span class="lastNumber"></span>
@@ -210,16 +231,17 @@
                     <div class="mt-60 mb-40">
                         <div class="accordion wow fadeInUp" id="accordionFAQ">
                             @foreach(json_decode($contents['faqs']->long_description) as $faq)
-                            <div class="accordion-item">
-                                <h5 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button text-heading-5 {{$loop->iteration == 1 ? 'collapsed':'' }}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse_{{$loop->iteration}}">How do I create an account?</button>
-                                </h5>
-                                <div class="accordion-collapse collapse {{$loop->iteration == 1 ? 'show':'' }}" id="faqCollapse_{{$loop->iteration}}" data-bs-parent="#accordionFAQ">
-                                    <div class="accordion-body">
-                                        {{$faq->answer}}
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button text-heading-5 {{$loop->iteration == 1 ? 'collapsed':'' }}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse_{{$loop->iteration}}">
+                                            {{$faq->question}}</button>
+                                    </h5>
+                                    <div class="accordion-collapse collapse {{$loop->iteration == 1 ? 'show':'' }}" id="faqCollapse_{{$loop->iteration}}" data-bs-parent="#accordionFAQ">
+                                        <div class="accordion-body">
+                                            {{$faq->answer}}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>

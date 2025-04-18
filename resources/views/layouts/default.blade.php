@@ -9,7 +9,7 @@
     <meta name="description" content="Index page">
     <meta name="keywords" content="index, page">
     <meta name="author" content="">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/template/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/logo/icon.png">
     <link href="assets/css/style.css@v=1.0.0.css" rel="stylesheet">
     <title>Mash Chauffeur Service - Your Comfort, Our Priority</title>
 </head>

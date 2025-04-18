@@ -10,14 +10,15 @@ class DriverController extends Controller
 {
     public function index()
     {
-        return response()->json(Drivers::all());
+        return Drivers::all();
     }
 
     public function store(Request $request)
     {
+//        return $request->all();
         $validated = $request->validate([
             'name'             => 'required|string|max:255',
-            'emails'            => 'required|emails|unique:drivers,emails',
+            'email'            => 'required|unique:drivers,email',
             'phone'            => 'required|string|max:20',
             'address'          => 'required|string|max:255',
             'fleet'            => 'required|string|max:255',
@@ -37,8 +38,8 @@ class DriverController extends Controller
 
         $driver = Drivers::create($validated);
 
-        return response()->json($driver, 201);
-    }
+        return redirect()->back();
+}
 
     public function show($id)
     {
@@ -52,7 +53,7 @@ class DriverController extends Controller
 
         $validated = $request->validate([
             'name'             => 'required|string|max:255',
-            'emails'            => 'required|emails|unique:drivers,emails,' . $id,
+            'email'            => 'required|unique:drivers,email,' . $id,
             'phone'            => 'required|string|max:20',
             'address'          => 'required|string|max:255',
             'fleet'            => 'required|string|max:255',
@@ -80,7 +81,7 @@ class DriverController extends Controller
 
         $driver->update($validated);
 
-        return response()->json($driver);
+        return redirect()->back();
     }
 
     public function destroy($id)
@@ -97,6 +98,6 @@ class DriverController extends Controller
 
         $driver->delete();
 
-        return response()->json(['message' => 'Driver deleted successfully']);
+        return redirect()->back();
     }
 }
